@@ -3,3 +3,5 @@ uvicorn[standard]
 pydantic
 pytest
 httpx2
+psycopg[binary]
+python-dotenv
