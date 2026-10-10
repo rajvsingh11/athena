@@ -5,3 +5,7 @@ pytest
 httpx2
 psycopg[binary]
 python-dotenv
+
+email-validator
+SQLAlchemy>=2.0,<3.0
+alembic>=1.13,<2.0
