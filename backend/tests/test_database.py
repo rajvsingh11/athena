@@ -1,9 +1,12 @@
-from app.db.database import get_connection
+from sqlalchemy import text
+
+from app.db.database import engine
 
 
 def test_database_connection():
-    connection = get_connection()
+    with engine.connect() as connection:
+        result = connection.execute(
+            text("SELECT 1")
+        )
 
-    assert connection is not None
-
-    connection.close()
+        assert result.scalar_one() == 1

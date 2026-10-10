@@ -1,13 +1,25 @@
-import psycopg
+from sqlalchemy import URL, create_engine
+from sqlalchemy.orm import sessionmaker
 
 from app.core.config import settings
 
 
-def get_connection():
-    return psycopg.connect(
-        host=settings.DATABASE_HOST,
-        port=settings.DATABASE_PORT,
-        dbname=settings.DATABASE_NAME,
-        user=settings.DATABASE_USER,
-        password=settings.DATABASE_PASSWORD,
-    )
+DATABASE_URL = URL.create(
+    drivername="postgresql+psycopg",
+    username=settings.DATABASE_USER,
+    password=settings.DATABASE_PASSWORD,
+    host=settings.DATABASE_HOST,
+    port=settings.DATABASE_PORT,
+    database=settings.DATABASE_NAME,
+)
+
+engine = create_engine(
+    DATABASE_URL,
+    pool_pre_ping=True,
+)
+
+SessionLocal = sessionmaker(
+    bind=engine,
+    autoflush=False,
+    expire_on_commit=False,
+)
